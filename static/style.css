@@ -1,4 +1,10 @@
-body { background: #f5f7fb; }
-.navbar-brand { font-weight: 700; }
-.card { border: 0; border-radius: 16px; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06); }
-.badge-soft { background: #e8f0ff; color: #1d4ed8; }
+body { background:#f6f8fb; }
+.navbar-brand { font-weight:700; }
+.card { border:none; border-radius:1rem; box-shadow:0 0.2rem 1rem rgba(0,0,0,.05); }
+.metric { font-size:2rem; font-weight:700; }
+.badge-soft { background:#eef4ff; color:#2452a3; }
+.chat-box { background:#fff; border-radius:1rem; padding:1rem; max-height:430px; overflow:auto; border:1px solid #e9edf5; }
+.msg { padding:.75rem 1rem; border-radius:1rem; margin-bottom:.75rem; max-width:85%; }
+.msg.patient { background:#eef4ff; }
+.msg.student { background:#dff5e8; margin-left:auto; }
+.small-muted { color:#6c757d; font-size:.9rem; }

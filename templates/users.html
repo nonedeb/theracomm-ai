@@ -1,31 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
+<h2 class="mb-4">Manage Users</h2>
 <div class="row g-4">
-  <div class="col-md-5">
+  <div class="col-lg-4">
     <div class="card p-3">
-      <h4>Create User</h4>
+      <h5>Add User</h5>
       <form method="post">
         <input class="form-control mb-2" name="full_name" placeholder="Full name" required>
-        <input class="form-control mb-2" name="email" type="email" placeholder="Email" required>
+        <input class="form-control mb-2" name="email" placeholder="Email" required>
         <input class="form-control mb-2" name="password" type="password" placeholder="Password" required>
-        <select class="form-select mb-2" name="role">
-          <option value="student">Student</option>
-          <option value="faculty">Faculty</option>
-          <option value="manager">Manager</option>
-        </select>
+        <select class="form-select mb-2" name="role"><option>student</option><option>faculty</option><option>manager</option></select>
         <input class="form-control mb-2" name="section" placeholder="Section">
         <input class="form-control mb-3" name="specialization" placeholder="Specialization">
-        <button class="btn btn-primary">Create</button>
+        <button class="btn btn-primary w-100">Create User</button>
       </form>
     </div>
   </div>
-  <div class="col-md-7">
+  <div class="col-lg-8">
     <div class="card p-3">
-      <h4>Users</h4>
-      <div class="table-responsive"><table class="table"><thead><tr><th>Name</th><th>Email</th><th>Role</th></tr></thead><tbody>
-        {% for u in users %}
-        <tr><td>{{ u.full_name }}</td><td>{{ u.email }}</td><td>{{ u.role }}</td></tr>
-        {% else %}<tr><td colspan="3" class="text-muted">No users found.</td></tr>{% endfor %}
+      <h5>Existing Users</h5>
+      <div class="table-responsive"><table class="table"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Section</th></tr></thead><tbody>
+      {% for u in users %}<tr><td>{{ u.full_name }}</td><td>{{ u.email }}</td><td>{{ u.role }}</td><td>{{ u.section or '-' }}</td></tr>{% endfor %}
       </tbody></table></div>
     </div>
   </div>

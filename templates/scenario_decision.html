@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card p-4">
+  <div class="d-flex justify-content-between align-items-start mb-3">
+    <div>
+      <h3>{{ scenario.title }}</h3>
+      <div class="small-muted">{{ scenario.category }} · {{ scenario.difficulty }}</div>
+    </div>
+    <a class="btn btn-outline-secondary" href="{{ url_for('student_dashboard') }}">Back</a>
+  </div>
+  <p><strong>Patient says:</strong> {{ scenario.opening_statement }}</p>
+  <p class="small-muted">{{ scenario.clinical_context }}</p>
+  <form method="post">
+    {% for c in choices %}
+    <div class="form-check border rounded p-3 mb-2">
+      <input class="form-check-input" type="radio" name="choice_id" value="{{ c.id }}" id="c{{ c.id }}">
+      <label class="form-check-label ms-2" for="c{{ c.id }}">{{ c.choice_text }}</label>
+    </div>
+    {% endfor %}
+    <button class="btn btn-primary mt-2">Submit Answer</button>
+  </form>
+  {% if result %}
+  <hr>
+  <h5>Result</h5>
+  <p><strong>Score:</strong> {{ result.score }}/100</p>
+  <p>{{ result.ai_feedback }}</p>
+  <ul>
+    <li>Empathy: {{ result.empathy_score }}</li>
+    <li>Exploration: {{ result.exploration_score }}</li>
+    <li>Professionalism: {{ result.professionalism_score }}</li>
+  </ul>
+  {% endif %}
+</div>
+{% endblock %}

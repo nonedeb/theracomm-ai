@@ -1,17 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card p-3">
-  <h2>Scenarios</h2>
-  <div class="list-group list-group-flush mt-3">
-    {% for s in scenarios %}
-    <div class="list-group-item">
-      <div class="fw-semibold">{{ s.title }}</div>
-      <div class="text-muted small">{{ s.category }} · {{ s.patient_name }} · {{ s.difficulty }}</div>
-      <div class="mt-1">{{ s.opening_statement }}</div>
+<h2 class="mb-4">Manage Scenarios</h2>
+<div class="row g-4">
+  <div class="col-lg-5">
+    <div class="card p-3">
+      <h5>Add Scenario</h5>
+      <form method="post">
+        <input class="form-control mb-2" name="title" placeholder="Title" required>
+        <select class="form-select mb-2" name="scenario_type"><option value="chat">chat</option><option value="decision">decision</option></select>
+        <input class="form-control mb-2" name="category" placeholder="Category">
+        <input class="form-control mb-2" name="patient_name" placeholder="Patient name">
+        <input class="form-control mb-2" name="patient_age" placeholder="Patient age" type="number">
+        <input class="form-control mb-2" name="emotional_state" placeholder="Emotional state">
+        <textarea class="form-control mb-2" name="clinical_context" placeholder="Clinical context" required></textarea>
+        <textarea class="form-control mb-2" name="opening_statement" placeholder="Opening statement" required></textarea>
+        <input class="form-control mb-2" name="difficulty" placeholder="Difficulty">
+        <textarea class="form-control mb-3" name="learning_objective" placeholder="Learning objective"></textarea>
+        <button class="btn btn-primary w-100">Add Scenario</button>
+      </form>
     </div>
-    {% else %}
-    <div class="text-muted">No scenarios available.</div>
-    {% endfor %}
+  </div>
+  <div class="col-lg-7">
+    <div class="card p-3">
+      <h5>Scenario List</h5>
+      <div class="table-responsive"><table class="table"><thead><tr><th>Title</th><th>Type</th><th>Difficulty</th></tr></thead><tbody>
+      {% for s in scenarios %}<tr><td>{{ s.title }}</td><td>{{ s.scenario_type }}</td><td>{{ s.difficulty }}</td></tr>{% endfor %}
+      </tbody></table></div>
+    </div>
   </div>
 </div>
 {% endblock %}
