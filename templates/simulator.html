@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-5">
+    <div class="card p-4">
+      <h3>{{ scenario.title }}</h3>
+      <p class="text-muted">{{ scenario.category }} · {{ scenario.difficulty }}</p>
+      <hr>
+      <p><strong>Patient:</strong> {{ scenario.patient_name }}{% if scenario.patient_age %}, {{ scenario.patient_age }} years old{% endif %}</p>
+      <p><strong>Emotion:</strong> {{ scenario.emotional_state }}</p>
+      <p><strong>Context:</strong> {{ scenario.clinical_context }}</p>
+      <div class="alert alert-light border"><strong>Opening statement:</strong><br>{{ scenario.opening_statement }}</div>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <div class="card p-4">
+      <h4>Your Therapeutic Response</h4>
+      <form method="post">
+        <textarea class="form-control mb-3" name="student_response" placeholder="Type your response here...">{{ student_response }}</textarea>
+        <button class="btn btn-primary" type="submit">Evaluate Response</button>
+      </form>
+      {% if feedback %}
+      <hr>
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5 class="mb-0">Evaluation Result</h5>
+        <span class="badge text-bg-success score-badge">Score: {{ score }}/100</span>
+      </div>
+      <div class="alert alert-info mb-0">{{ feedback }}</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card p-4">
+  <h2 class="mb-3">Scenarios</h2>
+  <div class="table-responsive">
+    <table class="table">
+      <thead><tr><th>Title</th><th>Type</th><th>Category</th><th>Difficulty</th></tr></thead>
+      <tbody>
+      {% for scenario in scenarios %}
+        <tr>
+          <td>{{ scenario.title }}</td>
+          <td>{{ scenario.scenario_type }}</td>
+          <td>{{ scenario.category }}</td>
+          <td>{{ scenario.difficulty }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

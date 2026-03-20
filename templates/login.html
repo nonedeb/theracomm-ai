@@ -1,11 +1,28 @@
-{% extends "base.html" %}{% block content %}
-<div class="row justify-content-center"><div class="col-lg-5"><div class="card border-0 shadow rounded-4"><div class="card-body p-4">
-<h2 class="fw-bold mb-3 text-center">TheraComm AI</h2>
-<p class="text-muted text-center">AI-powered therapeutic communication training and evaluation platform.</p>
-<form method="POST">
-<div class="mb-3"><label class="form-label">Email</label><input name="email" type="email" class="form-control rounded-3" required></div>
-<div class="mb-3"><label class="form-label">Password</label><input name="password" type="password" class="form-control rounded-3" required></div>
-<button class="btn btn-primary w-100 rounded-3">Log In</button></form>
-<div class="small text-muted mt-3">Demo accounts:<br>manager@theracomm.ai / Manager123!<br>faculty@theracomm.ai / Faculty123!<br>student@theracomm.ai / Student123!</div>
-</div></div></div></div>
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card hero-card p-4">
+      <h2 class="mb-2">Login</h2>
+      <p class="text-muted">Use the demo accounts or your registered account.</p>
+      <form method="post">
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input class="form-control" type="email" name="email" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input class="form-control" type="password" name="password" required>
+        </div>
+        <button class="btn btn-primary w-100" type="submit">Login</button>
+      </form>
+      <hr>
+      <small class="text-muted">
+        Student: student@theracomm.ai / Student123!<br>
+        Faculty: faculty@theracomm.ai / Faculty123!<br>
+        Manager: manager@theracomm.ai / Manager123!
+      </small>
+    </div>
+  </div>
+</div>
 {% endblock %}

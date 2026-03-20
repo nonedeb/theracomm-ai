@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card p-4">
+  <h2 class="mb-3">My Results</h2>
+  <div class="table-responsive">
+    <table class="table">
+      <thead><tr><th>Date</th><th>Scenario</th><th>Score</th><th>Feedback</th></tr></thead>
+      <tbody>
+      {% for attempt in attempts %}
+        <tr>
+          <td>{{ attempt.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+          <td>{{ attempt.scenario.title }}</td>
+          <td>{{ attempt.score }}</td>
+          <td>{{ attempt.ai_feedback }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="4" class="text-muted">No attempts yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

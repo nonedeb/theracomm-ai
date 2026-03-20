@@ -1,35 +1,35 @@
-# TheraComm AI (Flask Pattern Version)
+# TheraComm AI Clean Build
 
-A Render-ready Flask web app patterned after the uploaded NCP & FDAR AI Analyzer structure.
-
-## Features
-- Role-based login: manager, faculty, student
-- AI Patient Simulator (chat-based OSCE)
-- Scenario-Based Decision Trainer
-- Student feedback and scoring
-- Faculty dashboard and curriculum insights
-- Manager user overview
-- Supabase / PostgreSQL-ready via `DATABASE_URL`
-- Render-ready via `render.yaml`
+A clean Flask + Supabase/Render-ready web app for therapeutic communication training.
 
 ## Demo accounts
-- manager@theracomm.ai / Manager123!
-- faculty@theracomm.ai / Faculty123!
-- student@theracomm.ai / Student123!
+- Manager: `manager@theracomm.ai` / `Manager123!`
+- Faculty: `faculty@theracomm.ai` / `Faculty123!`
+- Student: `student@theracomm.ai` / `Student123!`
 
-## Environment variables
-- `SECRET_KEY`
-- `DATABASE_URL`
-- `OPENAI_API_KEY` (optional)
-- `OPENAI_MODEL` (optional)
+## Features
+- Role-based login
+- Student dashboard
+- Faculty dashboard
+- Manager dashboard
+- AI patient simulator
+- Result tracking
+- Supabase/Postgres-ready configuration
 
-## Local run
+## Local setup
 ```bash
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 python app.py
 ```
 
-## Render
-Use Blueprint or a Python Web Service.
-- Build Command: `pip install -r requirements.txt`
-- Start Command: `gunicorn app:app`
+## Render setup
+- Build command: `pip install -r requirements.txt`
+- Start command: `gunicorn app:app`
+- Set `DATABASE_URL` to your Supabase Postgres connection string
+- Set `SECRET_KEY`
+- Set `OPENAI_API_KEY` if you want live AI scoring
+
+## Supabase note
+This app uses psycopg v3 and disables prepared statements for compatibility with Supabase poolers.
