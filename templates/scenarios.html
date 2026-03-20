@@ -1,21 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card p-4">
-  <h2 class="mb-3">Scenarios</h2>
-  <div class="table-responsive">
-    <table class="table">
-      <thead><tr><th>Title</th><th>Type</th><th>Category</th><th>Difficulty</th></tr></thead>
-      <tbody>
-      {% for scenario in scenarios %}
-        <tr>
-          <td>{{ scenario.title }}</td>
-          <td>{{ scenario.scenario_type }}</td>
-          <td>{{ scenario.category }}</td>
-          <td>{{ scenario.difficulty }}</td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
+<div class="card p-3">
+  <h2>Scenarios</h2>
+  <div class="list-group list-group-flush mt-3">
+    {% for s in scenarios %}
+    <div class="list-group-item">
+      <div class="fw-semibold">{{ s.title }}</div>
+      <div class="text-muted small">{{ s.category }} · {{ s.patient_name }} · {{ s.difficulty }}</div>
+      <div class="mt-1">{{ s.opening_statement }}</div>
+    </div>
+    {% else %}
+    <div class="text-muted">No scenarios available.</div>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

@@ -42,7 +42,6 @@ class Scenario(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(150), nullable=False)
-    scenario_type = db.Column(db.String(30), nullable=False, default="chat")
     category = db.Column(db.String(100), nullable=False)
     patient_name = db.Column(db.String(100), nullable=False)
     patient_age = db.Column(db.Integer, nullable=True)
@@ -81,18 +80,21 @@ def create_app():
     app.config["SECRET_KEY"] = secret_key
     app.config["SQLALCHEMY_DATABASE_URI"] = database_url
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    engine_connect_args = {}
+
+    connect_args = {}
     if database_url.startswith("postgresql+psycopg://"):
-        engine_connect_args = {"prepare_threshold": None, "sslmode": "require"}
+        connect_args = {
+            "prepare_threshold": None,
+            "sslmode": "require",
+            "connect_timeout": 5,
+        }
+
     app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-        "connect_args": engine_connect_args,
+        "connect_args": connect_args,
         "pool_pre_ping": True,
     }
 
     db.init_app(app)
-
-    with app.app_context():
-        db.create_all()
 
     @app.context_processor
     def inject_globals():
@@ -115,15 +117,6 @@ def create_app():
             return wrapper
         return decorator
 
-    @app.route("/init-db")
-    def init_db():
-        try:
-            db.create_all()
-            seed_defaults()
-            return "Database initialized successfully"
-        except Exception as e:
-            return f"Error: {str(e)}"
-            
     @app.route("/")
     def home():
         role = session.get("user_role")
@@ -137,7 +130,21 @@ def create_app():
 
     @app.route("/health")
     def health():
-        return {"status": "ok", "service": "TheraComm AI"}
+        return "ok", 200
+
+    @app.route("/init-db")
+    def init_db():
+        token = request.args.get("token")
+        expected = os.getenv("INIT_DB_TOKEN")
+        if expected and token != expected:
+            return "Unauthorized", 401
+        try:
+            with app.app_context():
+                db.create_all()
+                seed_defaults()
+            return "Database initialized successfully", 200
+        except Exception as e:
+            return f"Init DB error: {e}", 500
 
     @app.route("/login", methods=["GET", "POST"])
     def login():
@@ -182,8 +189,8 @@ def create_app():
     def manager_dashboard():
         users = User.query.order_by(User.role.asc(), User.full_name.asc()).all()
         scenarios = Scenario.query.order_by(Scenario.id.asc()).all()
-        attempts = Attempt.query.count()
-        return render_template("manager_dashboard.html", users=users, scenarios=scenarios, attempts=attempts)
+        attempt_count = Attempt.query.count()
+        return render_template("manager_dashboard.html", users=users, scenarios=scenarios, attempt_count=attempt_count)
 
     @app.route("/users", methods=["GET", "POST"])
     @login_required(role="manager")
@@ -284,7 +291,6 @@ def seed_defaults():
         scenarios = [
             Scenario(
                 title="Anxious Mother of a Febrile Child",
-                scenario_type="chat",
                 category="Pediatric Nursing",
                 patient_name="Mrs. Santos",
                 patient_age=32,
@@ -295,7 +301,6 @@ def seed_defaults():
             ),
             Scenario(
                 title="Preoperative Fear",
-                scenario_type="chat",
                 category="Medical-Surgical Nursing",
                 patient_name="Mr. Reyes",
                 patient_age=54,
@@ -306,7 +311,6 @@ def seed_defaults():
             ),
             Scenario(
                 title="Adolescent Refusing Treatment",
-                scenario_type="chat",
                 category="Adolescent Health",
                 patient_name="Jamie",
                 patient_age=16,
@@ -343,20 +347,16 @@ SCORE: <number>
 FEEDBACK: <text>
 SUGGESTIONS: <text>
 """
-            response = client.responses.create(
-                model="gpt-4.1-mini",
-                input=prompt,
-            )
+            response = client.responses.create(model="gpt-4.1-mini", input=prompt)
             text = response.output_text.strip()
             parsed_score = 75
-            feedback = text
             for line in text.splitlines():
                 if line.upper().startswith("SCORE:"):
                     try:
                         parsed_score = int(line.split(":", 1)[1].strip())
                     except Exception:
                         parsed_score = 75
-            return feedback, max(0, min(parsed_score, 100))
+            return text, max(0, min(parsed_score, 100))
         except Exception:
             pass
 

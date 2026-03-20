@@ -2,28 +2,26 @@
 {% block content %}
 <h2 class="mb-3">Faculty Dashboard</h2>
 <div class="row g-4 mb-4">
-  <div class="col-md-4"><div class="card p-3"><h6>Total Students</h6><div class="display-6">{{ total_students }}</div></div></div>
-  <div class="col-md-4"><div class="card p-3"><h6>Total Attempts</h6><div class="display-6">{{ attempts|length }}</div></div></div>
-  <div class="col-md-4"><div class="card p-3"><h6>Average Score</h6><div class="display-6">{{ avg_score }}</div></div></div>
+  <div class="col-md-4"><div class="card p-3"><h5>Total Students</h5><div class="display-6">{{ total_students }}</div></div></div>
+  <div class="col-md-4"><div class="card p-3"><h5>Average Score</h5><div class="display-6">{{ avg_score }}</div></div></div>
+  <div class="col-md-4"><div class="card p-3"><h5>Total Attempts</h5><div class="display-6">{{ attempts|length }}</div></div></div>
 </div>
-<div class="card p-4">
-  <h4 class="mb-3">Recent Student Attempts</h4>
-  <div class="table-responsive">
-    <table class="table">
-      <thead><tr><th>Student</th><th>Scenario</th><th>Score</th><th>Date</th></tr></thead>
-      <tbody>
-      {% for attempt in attempts %}
-        <tr>
-          <td>{{ attempt.user.full_name }}</td>
-          <td>{{ attempt.scenario.title }}</td>
-          <td>{{ attempt.score }}</td>
-          <td>{{ attempt.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
-        </tr>
-      {% else %}
-        <tr><td colspan="4" class="text-muted">No attempts yet.</td></tr>
-      {% endfor %}
-      </tbody>
-    </table>
-  </div>
+<div class="card p-3 mb-4">
+  <h5>Students</h5>
+  <ul class="list-group list-group-flush">
+    {% for s in students %}
+    <li class="list-group-item">{{ s.full_name }} <span class="text-muted">{{ s.section or '' }}</span></li>
+    {% else %}
+    <li class="list-group-item text-muted">No students found.</li>
+    {% endfor %}
+  </ul>
+</div>
+<div class="card p-3">
+  <h5>Recent Attempts</h5>
+  <div class="table-responsive"><table class="table"><thead><tr><th>Student</th><th>Scenario</th><th>Score</th><th>Date</th></tr></thead><tbody>
+  {% for a in attempts %}
+  <tr><td>{{ a.user.full_name }}</td><td>{{ a.scenario.title }}</td><td>{{ a.score }}</td><td>{{ a.created_at.strftime('%Y-%m-%d %H:%M') }}</td></tr>
+  {% else %}<tr><td colspan="4" class="text-muted">No attempts yet.</td></tr>{% endfor %}
+  </tbody></table></div>
 </div>
 {% endblock %}

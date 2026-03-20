@@ -1,40 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="row g-4">
-  <div class="col-lg-4">
-    <div class="card p-4">
-      <h4>Add User</h4>
+  <div class="col-md-5">
+    <div class="card p-3">
+      <h4>Create User</h4>
       <form method="post">
-        <div class="mb-3"><label class="form-label">Full Name</label><input class="form-control" name="full_name" required></div>
-        <div class="mb-3"><label class="form-label">Email</label><input class="form-control" type="email" name="email" required></div>
-        <div class="mb-3"><label class="form-label">Password</label><input class="form-control" type="password" name="password" required></div>
-        <div class="mb-3"><label class="form-label">Role</label>
-          <select class="form-select" name="role"><option>student</option><option>faculty</option><option>manager</option></select>
-        </div>
-        <div class="mb-3"><label class="form-label">Section</label><input class="form-control" name="section"></div>
-        <div class="mb-3"><label class="form-label">Specialization</label><input class="form-control" name="specialization"></div>
-        <button class="btn btn-primary w-100" type="submit">Create User</button>
+        <input class="form-control mb-2" name="full_name" placeholder="Full name" required>
+        <input class="form-control mb-2" name="email" type="email" placeholder="Email" required>
+        <input class="form-control mb-2" name="password" type="password" placeholder="Password" required>
+        <select class="form-select mb-2" name="role">
+          <option value="student">Student</option>
+          <option value="faculty">Faculty</option>
+          <option value="manager">Manager</option>
+        </select>
+        <input class="form-control mb-2" name="section" placeholder="Section">
+        <input class="form-control mb-3" name="specialization" placeholder="Specialization">
+        <button class="btn btn-primary">Create</button>
       </form>
     </div>
   </div>
-  <div class="col-lg-8">
-    <div class="card p-4">
+  <div class="col-md-7">
+    <div class="card p-3">
       <h4>Users</h4>
-      <div class="table-responsive">
-        <table class="table">
-          <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th></tr></thead>
-          <tbody>
-          {% for user in users %}
-            <tr>
-              <td>{{ user.full_name }}</td>
-              <td>{{ user.email }}</td>
-              <td>{{ user.role }}</td>
-              <td>{{ user.status }}</td>
-            </tr>
-          {% endfor %}
-          </tbody>
-        </table>
-      </div>
+      <div class="table-responsive"><table class="table"><thead><tr><th>Name</th><th>Email</th><th>Role</th></tr></thead><tbody>
+        {% for u in users %}
+        <tr><td>{{ u.full_name }}</td><td>{{ u.email }}</td><td>{{ u.role }}</td></tr>
+        {% else %}<tr><td colspan="3" class="text-muted">No users found.</td></tr>{% endfor %}
+      </tbody></table></div>
     </div>
   </div>
 </div>
