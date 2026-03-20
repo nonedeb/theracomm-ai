@@ -1,39 +1,6 @@
 services:
   - type: web
-    name: theracomm-ai-api
-    runtime: python
-    rootDir: backend
+    name: theracomm-ai
+    env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn run:app
-    plan: free
-    envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.11
-      - key: SECRET_KEY
-        generateValue: true
-      - key: DATABASE_URL
-        sync: false
-      - key: CORS_ORIGINS
-        fromService:
-          type: web
-          name: theracomm-ai-web
-          property: url
-      - key: OPENAI_API_KEY
-        sync: false
-
-  - type: web
-    name: theracomm-ai-web
-    runtime: static
-    rootDir: frontend
-    buildCommand: npm install && npm run build
-    staticPublishPath: dist
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
-    envVars:
-      - key: VITE_API_BASE_URL
-        fromService:
-          type: web
-          name: theracomm-ai-api
-          property: url
+    startCommand: gunicorn app:app

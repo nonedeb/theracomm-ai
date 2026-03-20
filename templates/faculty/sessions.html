@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block content %}
+<h2 class="fw-bold mb-4">Chat Sessions</h2>
+<div class="card border-0 shadow-sm rounded-4"><div class="card-body">
+<table class="table table-hover"><thead><tr><th>Student</th><th>Scenario</th><th>Score</th><th>Status</th><th>Date</th><th></th></tr></thead><tbody>
+{% for s in sessions %}<tr><td>{{ User.query.get(s.student_id).name if User.query.get(s.student_id) else 'Unknown' }}</td><td>{{ Scenario.query.get(s.scenario_id).title if Scenario.query.get(s.scenario_id) else 'Unknown' }}</td><td>{{ s.overall_score or '-' }}</td><td>{{ s.status }}</td><td>{{ s.started_at.strftime('%Y-%m-%d %H:%M') }}</td><td><a href="{{ url_for('faculty_session_detail', chat_session_id=s.id) }}">View</a></td></tr>{% else %}<tr><td colspan="6" class="text-center text-muted">No sessions yet.</td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block content %}
+<h2 class="fw-bold mb-4">Decision Trainer Attempts</h2>
+<div class="card border-0 shadow-sm rounded-4"><div class="card-body">
+<table class="table table-hover"><thead><tr><th>Student</th><th>Scenario</th><th>Selected Response</th><th>Score</th><th>Date</th></tr></thead><tbody>
+{% for a in attempts %}<tr><td>{{ User.query.get(a.student_id).name if User.query.get(a.student_id) else 'Unknown' }}</td><td>{{ Scenario.query.get(a.scenario_id).title if Scenario.query.get(a.scenario_id) else 'Unknown' }}</td><td>{{ ScenarioChoice.query.get(a.selected_choice_id).choice_text if ScenarioChoice.query.get(a.selected_choice_id) else '' }}</td><td>{{ a.score }}</td><td>{{ a.created_at.strftime('%Y-%m-%d %H:%M') }}</td></tr>{% else %}<tr><td colspan="5" class="text-center text-muted">No attempts yet.</td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

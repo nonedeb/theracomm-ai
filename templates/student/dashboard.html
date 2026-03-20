@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block content %}
+<h2 class="fw-bold mb-4">Student Dashboard</h2>
+<div class="row g-4 mb-4">
+  <div class="col-md-3"><div class="card border-0 shadow-sm rounded-4 metric-card"><div class="card-body"><div class="text-muted">Average Chat Score</div><h3>{{ avg_chat }}</h3></div></div></div>
+  <div class="col-md-3"><div class="card border-0 shadow-sm rounded-4 metric-card"><div class="card-body"><div class="text-muted">Average Trainer Score</div><h3>{{ avg_quiz }}</h3></div></div></div>
+  <div class="col-md-3"><div class="card border-0 shadow-sm rounded-4 metric-card"><div class="card-body"><div class="text-muted">Chat Sessions</div><h3>{{ chat_sessions|length }}</h3></div></div></div>
+  <div class="col-md-3"><div class="card border-0 shadow-sm rounded-4 metric-card"><div class="card-body"><div class="text-muted">Trainer Attempts</div><h3>{{ decision_attempts|length }}</h3></div></div></div>
+</div>
+<div class="row g-4">
+  <div class="col-lg-6"><div class="card border-0 shadow-sm rounded-4"><div class="card-body">
+    <h5 class="mb-3">Quick Start</h5>
+    <a class="btn btn-primary rounded-3 me-2" href="{{ url_for('student_simulator_list') }}">Start AI Patient Simulator</a>
+    <a class="btn btn-outline-primary rounded-3" href="{{ url_for('student_trainer_list') }}">Open Decision Trainer</a>
+  </div></div></div>
+  <div class="col-lg-6"><div class="card border-0 shadow-sm rounded-4"><div class="card-body">
+    <h5 class="mb-3">Available Scenarios</h5>
+    {% for sc in scenarios %}<div class="d-flex justify-content-between mb-2"><span>{{ sc.title }}</span><span class="soft-badge">{{ sc.scenario_type|title }}</span></div>{% endfor %}
+  </div></div></div>
+</div>
+{% endblock %}

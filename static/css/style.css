@@ -1,0 +1,9 @@
+body{font-family:Inter,'Segoe UI',Arial,sans-serif;background:#f8fafc}
+.card{transition:transform .15s ease, box-shadow .15s ease}
+.card:hover{transform:translateY(-2px)}
+.metric-card h3{font-weight:800}
+.chat-box{max-height:460px;overflow:auto;background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1rem}
+.chat-msg{padding:.8rem 1rem;border-radius:1rem;margin-bottom:.75rem;max-width:82%}
+.chat-student{background:#dbeafe;margin-left:auto}
+.chat-patient{background:#f3f4f6}
+.soft-badge{background:#eef2ff;color:#3730a3;padding:.35rem .65rem;border-radius:999px;font-size:.85rem}

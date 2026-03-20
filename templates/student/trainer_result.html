@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block content %}
+<h2 class="fw-bold mb-4">Trainer Result</h2>
+<div class="card border-0 shadow-sm rounded-4 mb-4"><div class="card-body">
+  <h4>{{ scenario.title }}</h4>
+  <p><strong>Score:</strong> {{ attempt.score }}/100</p>
+  <p><strong>Your answer:</strong> {{ selected.choice_text }}</p>
+  <p><strong>Classification:</strong> {{ selected.classification|replace('_',' ')|title }}</p>
+  <p><strong>Rationale:</strong> {{ selected.rationale }}</p>
+  <hr>
+  <p><strong>Best answer:</strong> {{ best.choice_text if best else '' }}</p>
+  <p class="mb-0">{{ best.rationale if best else '' }}</p>
+</div></div>
+<a class="btn btn-primary rounded-3" href="{{ url_for('student_trainer_list') }}">Back to Trainer</a>
+{% endblock %}

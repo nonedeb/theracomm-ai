@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block content %}
+<h2 class="fw-bold mb-4">Session Detail</h2>
+<div class="card border-0 shadow-sm rounded-4 mb-4"><div class="card-body">
+  <h5>{{ scenario.title }}</h5>
+  <p><strong>Student:</strong> {{ student.name }}</p>
+  <p><strong>Overall Score:</strong> {{ evaluation.overall_score if evaluation else chat_session.overall_score }}</p>
+</div></div>
+<div class="row g-4 mb-4">
+  <div class="col-lg-7"><div class="card border-0 shadow-sm rounded-4"><div class="card-body">
+    <h5>Transcript</h5>
+    {% for m in messages %}<div class="mb-2"><strong>{{ 'Student' if m.sender == 'student' else scenario.patient_name }}:</strong> {{ m.message_text }}</div>{% endfor %}
+  </div></div></div>
+  <div class="col-lg-5"><div class="card border-0 shadow-sm rounded-4"><div class="card-body">
+    <h5>Feedback</h5>
+    <p><strong>Strengths</strong></p><ul>{% for item in strengths %}<li>{{ item }}</li>{% endfor %}</ul>
+    <p><strong>Improvements</strong></p><ul>{% for item in improvements %}<li>{{ item }}</li>{% endfor %}</ul>
+    <p><strong>Examples</strong></p><ul>{% for item in examples %}<li>{{ item }}</li>{% endfor %}</ul>
+  </div></div></div>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block content %}
+<h2 class="fw-bold mb-4">Chat Evaluation Result</h2>
+<div class="card border-0 shadow-sm rounded-4 mb-4"><div class="card-body">
+  <h4 class="mb-2">{{ scenario.title }}</h4>
+  <p class="mb-0">Overall Score: <strong>{{ evaluation.overall_score if evaluation else 0 }}/100</strong></p>
+  <p class="text-muted">{{ chat_session.feedback_summary }}</p>
+</div></div>
+<div class="row g-4 mb-4">
+  <div class="col-md-4"><div class="card border-0 shadow-sm rounded-4"><div class="card-body"><strong>Empathy</strong><div>{{ evaluation.empathy_score if evaluation else 0 }}/25</div></div></div></div>
+  <div class="col-md-4"><div class="card border-0 shadow-sm rounded-4"><div class="card-body"><strong>Open-ended Questions</strong><div>{{ evaluation.open_ended_score if evaluation else 0 }}/20</div></div></div></div>
+  <div class="col-md-4"><div class="card border-0 shadow-sm rounded-4"><div class="card-body"><strong>Active Listening</strong><div>{{ evaluation.active_listening_score if evaluation else 0 }}/20</div></div></div></div>
+  <div class="col-md-6"><div class="card border-0 shadow-sm rounded-4"><div class="card-body"><strong>Professionalism</strong><div>{{ evaluation.professionalism_score if evaluation else 0 }}/20</div></div></div></div>
+  <div class="col-md-6"><div class="card border-0 shadow-sm rounded-4"><div class="card-body"><strong>Barrier Avoidance</strong><div>{{ evaluation.barrier_avoidance_score if evaluation else 0 }}/15</div></div></div></div>
+</div>
+<div class="row g-4">
+  <div class="col-lg-4"><div class="card border-0 shadow-sm rounded-4"><div class="card-body"><h5>Strengths</h5><ul>{% for item in strengths %}<li>{{ item }}</li>{% endfor %}</ul></div></div></div>
+  <div class="col-lg-4"><div class="card border-0 shadow-sm rounded-4"><div class="card-body"><h5>Areas to Improve</h5><ul>{% for item in improvements %}<li>{{ item }}</li>{% endfor %}</ul></div></div></div>
+  <div class="col-lg-4"><div class="card border-0 shadow-sm rounded-4"><div class="card-body"><h5>Improved Response Examples</h5><ul>{% for item in examples %}<li>{{ item }}</li>{% endfor %}</ul></div></div></div>
+</div>
+{% endblock %}

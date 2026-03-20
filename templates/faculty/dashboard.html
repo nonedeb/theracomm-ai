@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block content %}
+<h2 class="fw-bold mb-4">Faculty Dashboard</h2>
+<div class="row g-4">
+  <div class="col-md-3"><div class="card border-0 shadow-sm rounded-4 metric-card"><div class="card-body"><div class="text-muted">Completed Chat Sessions</div><h3>{{ total_chat }}</h3></div></div></div>
+  <div class="col-md-3"><div class="card border-0 shadow-sm rounded-4 metric-card"><div class="card-body"><div class="text-muted">Trainer Attempts</div><h3>{{ total_quiz }}</h3></div></div></div>
+  <div class="col-md-3"><div class="card border-0 shadow-sm rounded-4 metric-card"><div class="card-body"><div class="text-muted">Average Chat Score</div><h3>{{ avg_chat }}</h3></div></div></div>
+  <div class="col-md-3"><div class="card border-0 shadow-sm rounded-4 metric-card"><div class="card-body"><div class="text-muted">Low Empathy Cases</div><h3>{{ low_empathy }}</h3></div></div></div>
+</div>
+{% endblock %}

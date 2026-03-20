@@ -1,0 +1,29 @@
+{% extends "base.html" %}{% block content %}
+<h2 class="fw-bold mb-3">{{ scenario.title }}</h2>
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="chat-box shadow-sm">
+      {% for m in messages %}
+      <div class="chat-msg {{ 'chat-student' if m.sender == 'student' else 'chat-patient' }}">
+        <div class="small text-muted mb-1">{{ 'You' if m.sender == 'student' else scenario.patient_name }}</div>
+        <div>{{ m.message_text }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    <form method="POST" class="mt-3">
+      <div class="input-group">
+        <input name="message" class="form-control rounded-start-4" placeholder="Type your therapeutic response here...">
+        <button class="btn btn-primary" name="action" value="send">Send</button>
+        <button class="btn btn-outline-danger rounded-end-4" name="action" value="end">End & Evaluate</button>
+      </div>
+    </form>
+  </div>
+  <div class="col-lg-4"><div class="card border-0 shadow-sm rounded-4"><div class="card-body">
+    <h5>Scenario Details</h5>
+    <p><strong>Patient:</strong> {{ scenario.patient_name }}, {{ scenario.patient_age }}</p>
+    <p><strong>Emotion:</strong> {{ scenario.emotional_state }}</p>
+    <p><strong>Context:</strong> {{ scenario.clinical_context }}</p>
+    <div class="alert alert-light rounded-4 mb-0">Tip: Use open-ended questions, empathy, and avoid false reassurance.</div>
+  </div></div></div>
+</div>
+{% endblock %}
