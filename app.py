@@ -92,8 +92,7 @@ def create_app():
     db.init_app(app)
 
     with app.app_context():
-        db.create_all()
-        seed_defaults()
+    db.create_all()
 
     @app.context_processor
     def inject_globals():
@@ -116,6 +115,15 @@ def create_app():
             return wrapper
         return decorator
 
+    @app.route("/init-db")
+    def init_db():
+        try:
+            db.create_all()
+            seed_defaults()
+            return "Database initialized successfully"
+        except Exception as e:
+            return f"Error: {str(e)}"
+            
     @app.route("/")
     def home():
         role = session.get("user_role")
