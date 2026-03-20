@@ -1,4 +1,8 @@
-create table if not exists users (
+drop table if exists attempts cascade;
+drop table if exists scenarios cascade;
+drop table if exists users cascade;
+
+create table users (
     id serial primary key,
     full_name varchar(120) not null,
     email varchar(120) unique not null,
@@ -10,10 +14,11 @@ create table if not exists users (
     created_at timestamp not null default current_timestamp
 );
 
-create table if not exists scenarios (
+create index ix_users_email on users(email);
+
+create table scenarios (
     id serial primary key,
     title varchar(150) not null,
-    scenario_type varchar(30) not null default 'chat',
     category varchar(100) not null,
     patient_name varchar(100) not null,
     patient_age integer,
@@ -24,7 +29,7 @@ create table if not exists scenarios (
     created_at timestamp not null default current_timestamp
 );
 
-create table if not exists attempts (
+create table attempts (
     id serial primary key,
     user_id integer not null references users(id) on delete cascade,
     scenario_id integer not null references scenarios(id) on delete cascade,
