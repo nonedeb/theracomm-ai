@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card"><div class="card-body">
+  <h3>{{ scenario.title }}</h3>
+  <p class="small-muted">{{ scenario.category }} · {{ scenario.difficulty }}</p>
+  <p><strong>Patient says:</strong> {{ scenario.opening_statement }}</p>
+  <form method="post">
+    {% for choice in choices %}
+    <div class="form-check mb-2"><input class="form-check-input" type="radio" name="selected_choice" value="{{ loop.index0 }}" id="c{{ loop.index0 }}"><label class="form-check-label" for="c{{ loop.index0 }}">{{ choice }}</label></div>
+    {% endfor %}
+    <button class="btn btn-primary mt-3">Submit Answer</button>
+  </form>
+  {% if result %}<hr><div class="score-pill mb-2">Score: {{ score }}/100</div><p>{{ result }}</p>{% endif %}
+</div></div>
+{% endblock %}

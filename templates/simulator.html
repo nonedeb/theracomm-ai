@@ -1,21 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card p-4 mb-4">
-  <h2>{{ scenario.title }}</h2>
-  <p class="text-muted">{{ scenario.category }} · {{ scenario.patient_name }}, age {{ scenario.patient_age or 'N/A' }} · {{ scenario.emotional_state }}</p>
-  <p><strong>Context:</strong> {{ scenario.clinical_context }}</p>
-  <p><strong>Patient says:</strong> “{{ scenario.opening_statement }}”</p>
-</div>
-<div class="card p-4">
-  <form method="post">
-    <label class="form-label">Your therapeutic response</label>
-    <textarea class="form-control mb-3" name="student_response" rows="6" required>{{ student_response }}</textarea>
-    <button class="btn btn-primary">Evaluate Response</button>
-  </form>
-  {% if feedback %}
-  <hr>
-  <h5>Score: {{ score }}/100</h5>
-  <p>{{ feedback }}</p>
-  {% endif %}
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="card"><div class="card-body">
+      <h3>{{ scenario.title }}</h3>
+      <div class="small-muted mb-3">{{ scenario.category }} · {{ scenario.difficulty }}</div>
+      <div class="p-3 rounded bg-light mb-3"><strong>{{ scenario.patient_name }}</strong>: {{ scenario.opening_statement }}</div>
+      {% if patient_reply %}<div class="p-3 rounded border mb-3"><strong>Patient reply</strong>: {{ patient_reply }}</div>{% endif %}
+      <form method="post">
+        <label class="form-label">Your therapeutic response</label>
+        <textarea name="student_response" class="form-control textarea-lg" required>{{ student_response }}</textarea>
+        <button class="btn btn-primary mt-3">Evaluate Response</button>
+      </form>
+    </div></div>
+  </div>
+  <div class="col-lg-5">
+    <div class="card"><div class="card-body">
+      <h5>Scenario Details</h5>
+      <p><strong>Emotion:</strong> {{ scenario.emotional_state }}</p>
+      <p><strong>Context:</strong> {{ scenario.clinical_context }}</p>
+      {% if feedback %}<hr><div class="score-pill mb-2">Score: {{ score }}/100</div><p>{{ feedback }}</p>{% endif %}
+    </div></div>
+  </div>
 </div>
 {% endblock %}

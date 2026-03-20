@@ -1,32 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2 class="mb-4">Faculty Dashboard</h2>
+<div class="card hero mb-4"><div class="card-body p-4"><h2>Faculty Dashboard</h2><p class="mb-0">Review student assessment records and add faculty comments.</p></div></div>
 <div class="row g-3 mb-4">
-  <div class="col-md-3"><div class="card p-3"><div class="small-muted">Students</div><div class="metric">{{ students|length }}</div></div></div>
-  <div class="col-md-3"><div class="card p-3"><div class="small-muted">Decision Avg</div><div class="metric">{{ decision_avg }}</div></div></div>
-  <div class="col-md-3"><div class="card p-3"><div class="small-muted">Chat Avg</div><div class="metric">{{ chat_avg }}</div></div></div>
-  <div class="col-md-3"><div class="card p-3"><div class="small-muted">Weakest Skill</div><div class="metric" style="font-size:1.25rem">{{ weakest_skill }}</div></div></div>
+  <div class="col-md-4"><div class="card"><div class="card-body"><h6>Total Students</h6><h3>{{ students|length }}</h3></div></div></div>
+  <div class="col-md-4"><div class="card"><div class="card-body"><h6>Average Score</h6><h3>{{ avg_score }}</h3></div></div></div>
+  <div class="col-md-4"><div class="card"><div class="card-body"><h6>Pending Reviews</h6><h3>{{ pending }}</h3></div></div></div>
 </div>
-<div class="card p-3 mb-4">
-  <h5>Curriculum Insight</h5>
-  <p class="mb-0">{{ curriculum_insight }}</p>
-</div>
-<div class="row g-4">
-  <div class="col-lg-6">
-    <div class="card p-3">
-      <h5>Recent Decision Attempts</h5>
-      <div class="table-responsive"><table class="table"><thead><tr><th>Student</th><th>Scenario</th><th>Score</th></tr></thead><tbody>
-      {% for a in attempts %}<tr><td>{{ a.user.full_name }}</td><td>{{ a.scenario.title }}</td><td>{{ a.score }}</td></tr>{% endfor %}
-      </tbody></table></div>
-    </div>
-  </div>
-  <div class="col-lg-6">
-    <div class="card p-3">
-      <h5>Recent Chat Sessions</h5>
-      <div class="table-responsive"><table class="table"><thead><tr><th>Student</th><th>Scenario</th><th>Status</th></tr></thead><tbody>
-      {% for c in chat_sessions %}<tr><td>{{ c.user.full_name }}</td><td>{{ c.scenario.title }}</td><td>{{ c.final_score if c.final_score is not none else c.status }}</td></tr>{% endfor %}
-      </tbody></table></div>
-    </div>
-  </div>
-</div>
+<a class="btn btn-primary mb-3" href="{{ url_for('faculty_records') }}">Open Student Records</a>
+<div class="card"><div class="card-body"><h5>Recent Assessments</h5><table class="table"><thead><tr><th>Student</th><th>Score</th><th>Status</th><th></th></tr></thead><tbody>{% for a in assessments %}<tr><td>{{ a.user.full_name }}</td><td>{{ a.total_score if a.completed_at else 'In progress' }}</td><td>{{ a.review_status|title }}</td><td><a class="btn btn-sm btn-outline-primary" href="{{ url_for('faculty_review', assessment_id=a.id) }}">Review</a></td></tr>{% endfor %}</tbody></table></div></div>
 {% endblock %}

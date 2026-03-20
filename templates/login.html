@@ -1,16 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="row justify-content-center">
-  <div class="col-md-5">
-    <div class="card p-4">
-      <h2 class="mb-2">Sign in</h2>
-      <p class="text-muted">Therapeutic communication training and analytics platform.</p>
-      <form method="post">
-        <div class="mb-3"><label class="form-label">Email</label><input class="form-control" name="email" required></div>
-        <div class="mb-3"><label class="form-label">Password</label><input class="form-control" type="password" name="password" required></div>
-        <button class="btn btn-primary w-100">Login</button>
-      </form>
-      <div class="mt-3 small-muted">Run <code>/init-db</code> once after deployment.</div>
+  <div class="col-md-6 col-lg-5">
+    <div class="card">
+      <div class="card-body p-4">
+        <h2 class="mb-2">Login</h2>
+        <p class="text-muted">Access student, faculty, or manager portal.</p>
+        <form method="post">
+          <div class="mb-3"><label class="form-label">Email</label><input class="form-control" type="email" name="email" required></div>
+          <div class="mb-3"><label class="form-label">Password</label><input class="form-control" type="password" name="password" required></div>
+          <button class="btn btn-primary w-100">Login</button>
+        </form>
+        <div class="mt-3 small-muted">
+          Demo: manager@theracomm.ai / Manager123!<br>
+          faculty@theracomm.ai / Faculty123!<br>
+          student@theracomm.ai / Student123!
+        </div>
+      </div>
     </div>
   </div>
 </div>

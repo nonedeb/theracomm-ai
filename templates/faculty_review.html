@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row g-4">
+<div class="col-lg-7"><div class="card"><div class="card-body"><h3>{{ assessment.user.full_name }}</h3><p class="small-muted">{{ assessment.started_at.strftime('%Y-%m-%d %H:%M') }} · {{ assessment.total_score }}/100 · {{ assessment.interpretation }}</p><table class="table"><thead><tr><th>Scenario</th><th>Answer</th><th>Score</th></tr></thead><tbody>{% for ans in assessment.answers %}<tr><td>{{ ans.scenario.title }}</td><td>{{ ans.student_answer }}</td><td>{{ ans.score }}/5</td></tr>{% endfor %}</tbody></table></div></div></div>
+<div class="col-lg-5"><div class="card"><div class="card-body"><h5>Faculty Review</h5><form method="post"><div class="mb-3"><label class="form-label">Comment</label><textarea class="form-control" name="faculty_comment" rows="5">{{ assessment.faculty_comment or '' }}</textarea></div><div class="mb-3"><label class="form-label">Recommendation</label><textarea class="form-control" name="faculty_recommendation" rows="5">{{ assessment.faculty_recommendation or '' }}</textarea></div><div class="mb-3"><label class="form-label">Status</label><select class="form-select" name="review_status"><option value="reviewed">Reviewed</option><option value="needs_followup">Needs Follow-up</option><option value="pending">Pending</option></select></div><button class="btn btn-primary">Save Review</button></form></div></div></div>
+</div>
+{% endblock %}

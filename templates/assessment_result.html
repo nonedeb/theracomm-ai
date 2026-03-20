@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row g-4">
+<div class="col-lg-4"><div class="card"><div class="card-body">
+  <h3>Assessment Result</h3>
+  <div class="display-6">{{ assessment.total_score }}/100</div>
+  <p><strong>Interpretation:</strong> {{ assessment.interpretation }}</p>
+  <p><strong>Review Status:</strong> {{ assessment.review_status|title }}</p>
+  <p>{{ assessment.overall_feedback }}</p>
+</div></div></div>
+<div class="col-lg-8"><div class="card"><div class="card-body">
+  <h5>Scenario Breakdown</h5>
+  <table class="table"><thead><tr><th>Scenario</th><th>Answer</th><th>Score</th><th>Feedback</th></tr></thead><tbody>
+  {% for ans in assessment.answers %}
+    <tr><td>{{ ans.scenario.title }}</td><td>{{ ans.student_answer }}</td><td>{{ ans.score }}/5</td><td>{{ ans.ai_feedback }}</td></tr>
+  {% endfor %}
+  </tbody></table>
+  {% if assessment.faculty_comment or assessment.faculty_recommendation %}
+  <hr><h5>Faculty Review</h5>
+  <p><strong>Comment:</strong> {{ assessment.faculty_comment or '-' }}</p>
+  <p><strong>Recommendation:</strong> {{ assessment.faculty_recommendation or '-' }}</p>
+  {% endif %}
+</div></div></div>
+</div>
+{% endblock %}

@@ -1,29 +1,23 @@
-# TheraComm AI v1.1
+# TheraComm AI v1.2
 
-Render + Supabase friendly Flask web app for therapeutic communication training.
+Render + Supabase ready Flask web app for therapeutic communication practice, assessment, faculty review, and manager administration.
 
-## Features
-- Role-based login: student, faculty, manager
-- Chat-style AI patient simulator
-- Scenario-based decision trainer
-- Results tracking
-- Faculty analytics dashboard
-- User and scenario management
-- Manual database initialization via `/init-db`
+## Setup
+1. Upload project to GitHub.
+2. Deploy on Render.
+3. Set environment variables:
+   - `SECRET_KEY`
+   - `DATABASE_URL` (Supabase Postgres)
+   - `OPENAI_API_KEY` (optional)
+4. Visit `/init-db` once.
+5. Log in.
 
-## Demo accounts
-Run `/init-db` once after deployment, then use:
+## Demo Accounts
 - manager@theracomm.ai / Manager123!
 - faculty@theracomm.ai / Faculty123!
 - student@theracomm.ai / Student123!
 
-## Deploy
-1. Push project to GitHub.
-2. Deploy to Render.
-3. Set `DATABASE_URL` and `SECRET_KEY`.
-4. Visit `/init-db` once.
-5. Log in.
-
-## Notes
-- For Supabase, use a direct or session pooler URL when possible.
-- Prepared statements are disabled for psycopg compatibility.
+## Main Modules
+- Student: chat practice, decision practice, 20-scenario assessment, results
+- Faculty: dashboard, records, comments, recommendations
+- Manager: user CRUD, scenario CRUD, optional library bank
