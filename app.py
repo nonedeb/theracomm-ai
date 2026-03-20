@@ -14,6 +14,17 @@ except Exception:
 
 db = SQLAlchemy()
 
+database_url = os.getenv("DATABASE_URL")
+
+app.config["SQLALCHEMY_DATABASE_URI"] = database_url
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+    "connect_args": {
+        "prepare_threshold": None,
+        "sslmode": "require",
+    },
+    "pool_pre_ping": True,
+}
 
 class User(db.Model):
     __tablename__ = "users"
