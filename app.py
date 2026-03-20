@@ -18,7 +18,7 @@ db = SQLAlchemy()
 class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(150), nullable=False)
+    full_name = db.Column(db.String(150), nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(255))
     role = db.Column(db.String(20), nullable=False)  # student, faculty, manager
@@ -316,9 +316,9 @@ def create_app():
             ("Faculty Reviewer", "faculty@theracomm.ai", "faculty", "Faculty123!"),
             ("Student User", "student@theracomm.ai", "student", "Student123!"),
         ]
-        for name, email, role, pw in demos:
+        for full_name, email, role, pw in demos:
             if not User.query.filter_by(email=email).first():
-                u = User(name=name, email=email, role=role, status="active")
+                u = User(full_name=full_name, email=email, role=role, status="active")
                 if role == "student":
                     u.section = "BSN 4A"
                 if role == "faculty":
@@ -398,7 +398,7 @@ def create_app():
             user = User.query.filter_by(email=normalize_email(request.form.get("email")), status="active").first()
             if user and user.check_password(request.form.get("password", "")):
                 session["user_id"] = user.id
-                session["user_name"] = user.name
+                session["user_name"] = user.full_name
                 session["user_role"] = user.role
                 flash("Login successful.", "success")
                 return redirect(url_for("home"))
@@ -653,11 +653,11 @@ def create_app():
         for s in ChatSession.query.order_by(ChatSession.started_at.desc()).all():
             stu = db.session.get(User, s.student_id)
             sc = db.session.get(Scenario, s.scenario_id)
-            rows.append(["Chat OSCE", stu.name if stu else "Unknown", sc.title if sc else "Unknown", s.overall_score or "", s.status, s.started_at.strftime("%Y-%m-%d %H:%M")])
+            rows.append(["Chat OSCE", stu.full_name if stu else "Unknown", sc.title if sc else "Unknown", s.overall_score or "", s.status, s.started_at.strftime("%Y-%m-%d %H:%M")])
         for a in DecisionAttempt.query.order_by(DecisionAttempt.created_at.desc()).all():
             stu = db.session.get(User, a.student_id)
             sc = db.session.get(Scenario, a.scenario_id)
-            rows.append(["Decision Trainer", stu.name if stu else "Unknown", sc.title if sc else "Unknown", a.score or "", "submitted", a.created_at.strftime("%Y-%m-%d %H:%M")])
+            rows.append(["Decision Trainer", stu.full_name if stu else "Unknown", sc.title if sc else "Unknown", a.score or "", "submitted", a.created_at.strftime("%Y-%m-%d %H:%M")])
         buf = io.StringIO()
         writer = csv.writer(buf)
         writer.writerows(rows)
@@ -682,7 +682,7 @@ def create_app():
     @login_required
     @role_required("manager")
     def manager_users():
-        return render_template("manager/users.html", users=User.query.order_by(User.role.asc(), User.name.asc()).all())
+        return render_template("manager/users.html", users=User.query.order_by(User.role.asc(), User.full_name.asc()).all())
 
     return app
 
