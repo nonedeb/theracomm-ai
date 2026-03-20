@@ -296,6 +296,13 @@ def create_app():
         database_url += ("&" if "?" in database_url else "?") + "sslmode=require"
     app.config["SQLALCHEMY_DATABASE_URI"] = database_url
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "connect_args": {
+            "prepare_threshold": None,
+            "sslmode": "require",
+        },
+        "pool_pre_ping": True,
+    }
     db.init_app(app)
 
     def login_required(f):
